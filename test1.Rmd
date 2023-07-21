@@ -1,0 +1,80 @@
+---
+title: "Quantum Computing and Qiskit"
+subtitle: "AMCEC, Department Of Physics"
+author: "Suhas P K"
+date: "2023-07-18"
+output:
+  rmdformats::downcute:
+    self_contained: true
+    default_style: "dark"
+    downcute_theme: "chaos"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+
+
+
+$$\newcommand{\ket}[1]{\left|{#1}\right\rangle}$$$$\newcommand{\bra}[1]{\left\langle{#1}\right|}$$$$\newcommand{\braket}[2]{\left\langle{#1}\middle|{#2}\right\rangle}$$
+
+### Representation of Qubits
+
+The **pure state space qubits**(Two level quantum mechanical systems) can be visualised using an imaginary sphere called **BLOCH SPHERE**. It has a unit radius.
+
+<center> 
+<img src="E:\my data science journey\qiskit_for_AMC\bloch_sphere.png" width=720 height=400 />
+</center>
+
+
+The arrow on the sphere represents the state of the Qubit. The north and south spoles are used to represent the basis states $\ket{0}$ and $\ket{1}$ respectively. The other locations are the superpositions of $\ket{0}$ and $\ket{1}$ represented by $\ket{\psi} = a\ket{0} +b\ket{1}$ where $a$ and $b$ are complex numbers and satisfy the condition $a^{*}a + b^{*}b = |a|^2 + |b|^2 = 1$ signifies the probability. Thus, a qubit can be any point on the bloch sphere.
+
+The Bloch sphere allows the state of the qubit to be represented by spherical coordinates. They are polar angle $\theta$ and the azimuthal angle $\phi $ The bloch sphere is represented by the equation
+$$\ket{\phi} = \cos(\frac{\theta}{2})\ket{0} + e^{i\theta} \sin(\frac{\theta}{2})\ket{1}$$
+here $0\leqslant\theta\leqslant\pi$ and $0\leqslant\phi\leqslant 2\pi$. The normalization constrain is given by,
+$$ \left| \cos\left[ \frac{\theta}{2} \right] \right|^2 + \left| \sin\left[ \frac{\theta}{2}\right] \right|^2 = 1$$
+
+
+
+
+
+
+```{r}
+library(reticulate)
+```
+```{python}
+from qiskit import *
+from qiskit.visualization import plot_bloch_multivector, visualize_transition
+from qiskit_textbook.tools import array_to_latex
+```
+
+```{python, echo = FALSE}
+
+qc = QuantumCircuit(1)
+qc.x(0)
+qc.draw('mpl')
+```
+```{python, results = 'hide', message = FALSE, fig.show = 'hide'}
+visualize_transition(qc,trace = True, saveas = "xgate.gif", fpg = 100, spg = 2)
+```
+
+
+<center> 
+<img src="E:\my data science journey\qiskit_for_AMC\plot.gif" width=360 height=360 />
+</center>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

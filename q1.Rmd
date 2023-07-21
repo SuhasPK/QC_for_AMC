@@ -1,0 +1,29 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+library(reticulate)
+```
+```{python}
+
+from qiskit import *
+from qiskit.visualization import plot_bloch_multivector, visualize_transition
+from qiskit_textbook.tools import array_to_latex
+```
+
+```{python}
+
+qc = QuantumCircuit(1)
+qc.x(0)
+qc.draw('mpl')
+visualize_transition(qc,trace = True, saveas = "plot.gif", fpg = 100, spg = 2)
+```
+
+
+
+
+
+
+

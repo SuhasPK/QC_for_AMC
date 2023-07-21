@@ -1,0 +1,383 @@
+---
+title: "Quantum Computing and Qiskit"
+subtitle: "AMCEC, Department Of Physics"
+author: "Suhas P K"
+date: "2023-07-18"
+output:
+  rmdformats::downcute:
+    self_contained: true
+    default_style: "dark"
+    downcute_theme: "chaos"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Introduction
+
+$$\newcommand{\ket}[1]{\left|{#1}\right\rangle}$$$$\newcommand{\bra}[1]{\left\langle{#1}\right|}$$$$\newcommand{\braket}[2]{\left\langle{#1}\middle|{#2}\right\rangle}$$
+
+
+In quantum computing a quantum logic gate is a basic quantum circuit operating on a small number of qubits. A qubit is useless unless it is used to carry out a quantum calculation. The quantum calculations are achieved by performing a series of fundamental operations, known as **quantum logic gates**. They are the building blocks of quantum circuits similar to the classical logic gates in conventional digital circuits.
+
+Just to only understand the theory aspect of it, a set of python code chunks are attached so that some of the coding enthusiasts can try.
+
+**DISCLAIMER! This is optional.**
+This document is created using Rmarkdown, so to use python in Rstudios, a library called __reticulate__ is used. 
+Now the path of the pythons virtual environment, in this case 'r-reticulate' is specified.
+'__repl_python()__' opens the python shell.
+```{r, echo=FALSE}
+library(reticulate)
+use_miniconda("C:\\Users\\user\\AppData\\Local\\R-MINI~1\\envs\\r-reticulate")
+repl_python()
+```
+## Single Qubit Gates
+
+### X-gate or Quantum NOT-gate
+-In quantum computing the **quantum NOT-gate** for qubits takes $\ket{0}$ to $\ket{1}$ and vice versa. It is analogous to to the classical NOT-gate.
+- The matrix is representation of X-gate is
+
+$$
+X = \begin{bmatrix}
+0 & 1 \\ 1 & 0 
+\end{bmatrix}
+$$
+
+The math of the X-gate acting on $\ket{0}$ is as follows,
+$$
+X\ket{0} = \begin{bmatrix}
+0 & 1 \\ 1 & 0 
+\end{bmatrix} \begin{bmatrix} 1 \\  0 
+\end{bmatrix} = \begin{bmatrix} 0 \\  1 
+\end{bmatrix} = \ket{1}
+$$
+
+Do try the same for X-gate acting on $\ket{1}$.
+The result expected is $X\ket{1} = \ket{0}$.
+
+Lets simulate the X-gate action on qubits.\ 
+Import the libraries, if not install do install them.
+
+```{python}
+from qiskit import *
+from qiskit.visualization import plot_bloch_multivector, visualize_transition
+from qiskit_textbook.tools import array_to_latex
+```
+
+```{python X0, echo = FALSE}
+# creating |0>
+qcx = QuantumCircuit(1)
+# X|0>
+qcx.x(0)
+# circuit diagram
+qcx.draw('mpl')
+```
+```{python, results = 'hide', message = FALSE, fig.show = 'hide'}
+visualize_transition(qcx,trace = True, saveas = "x0gate.gif", fpg = 100, spg = 2)
+```
+The expected result is,
+
+<center> 
+<img src="E:\my data science journey\qiskit_for_AMC\QC_for_AMC\x0gate.gif" width=360 height=360 />
+</center>
+
+To understand the action of X-gate on $\ket{1}$,
+inbuilt $\ket{1}$ is not used, instead X-gate acts on $\ket{0}$ to give $\ket{1}$. Use this method to get $\ket{1}$. This also helps to understand how to build simple quantum logic.
+
+```{python X1}
+# Allowing to create a 1 qubit. By default |0> is used. 
+# creating a |0>
+qcx = QuantumCircuit(1)
+# obtaining |1>
+qcx.x(0)
+# Y|1>
+qcx.x(0)
+# circuit diagram
+qcx.draw('mpl')
+```
+```{python, results = 'hide', message = FALSE, fig.show = 'hide',echo=FALSE}
+visualize_transition(qcx,trace = True, saveas = "x1gate.gif", fpg = 100, spg = 2)
+```
+
+The expected result is,
+<center> 
+<img src="E:\my data science journey\qiskit_for_AMC\QC_for_AMC\x1gate.gif" width=360 height=360 />
+</center>
+
+### Y-gate
+- Y-gate is maps $\ket{0}$ state to $i\ket{1}$ state and $\ket{1}$ state to $-i\ket{0}$.
+- The Y-gate operation is as follows,
+$$
+Y\ket{0} = \begin{bmatrix}
+0 & -i \\ i & 0
+\end{bmatrix}\begin{bmatrix}
+1 \\ 0
+\end{bmatrix} = i\begin{bmatrix}
+0 \\ 1
+\end{bmatrix} = i\ket{0}
+$$
+
+```{python Y0}
+# creating |0>
+qcy = QuantumCircuit(1) 
+# Action of Y-gate on |0>
+qcy.y(0)
+# circuit diagram
+qcy.draw('mpl')
+```
+```{python, results = 'hide', message = FALSE, fig.show = 'hide',echo=FALSE}
+visualize_transition(qcy,trace = True, saveas = "y0gate.gif", fpg = 100, spg = 2)
+```
+
+The expected result is,
+<center> 
+<img src="E:\my data science journey\qiskit_for_AMC\QC_for_AMC\y0gate.gif" width=360 height=360 />
+</center>
+
+Do try the same for Y-gate acting on $\ket{1}$.
+The result expected is $Y\ket{1} = -i\ket{0}$.
+
+```{python Y1}
+# creating |0>
+qcy = QuantumCircuit(1) 
+# passing |0> to X-gate to get |1>
+qcy.x(0)
+# Action of Y-gate on |1>
+qcy.y(0)
+# circuit diagram
+qcy.draw('mpl')
+```
+```{python, results = 'hide', message = FALSE, fig.show = 'hide',echo=FALSE}
+visualize_transition(qcy,trace = True, saveas = "y1gate.gif", fpg = 100, spg = 2)
+```
+
+The expected result is,
+<center> 
+<img src="E:\my data science journey\qiskit_for_AMC\QC_for_AMC\y1gate.gif" width=360 height=360 />
+</center>
+
+### Z-gate
+
+-The Z-gate is represented by Pauli Z-matrix.
+- Z-gate maps input state $\ket{k}$ to $(-1)^{k}\ket{k}$.
+- For input $\ket{0}$ the output remains unchanged.
+- For input $\ket{1}$ the output is $\ket{1}$.
+
+- The Z-gate operation as follows,
+$$
+Z\ket{0} = \begin{bmatrix}
+1 & 0 \\ 0 & -1
+\end{bmatrix}\begin{bmatrix}
+1  \\ 0 
+\end{bmatrix}=\begin{bmatrix}
+1  \\ 0 
+\end{bmatrix}= \ket{0}
+$$
+
+
+```{python Z0}
+# creating |0>
+qcz = QuantumCircuit(1)
+# Action of Z-gate on |0>
+qcz.z(0)
+# circuit diaagram
+qcz.draw('mpl')
+```
+```{python, results = 'hide', message = FALSE, fig.show = 'hide',echo=FALSE}
+visualize_transition(qcz,trace = True, saveas = "z0gate.gif", fpg = 10, spg = 2)
+```
+
+The expected result is,
+<center> 
+<img src="E:\my data science journey\qiskit_for_AMC\QC_for_AMC\z0gate.gif" width=360 height=360 />
+</center>
+
+Do try the same for Z-gate acting on $\ket{1}$.
+The result expected is $Z\ket{1} = -\ket{1}$.
+
+```{python Z1}
+# creating |0>
+qcz = QuantumCircuit(1) 
+# Action of X-gate on |0> to get |1> 
+qcz.x(0)
+# Action of Z-gate on |1>
+qcz.z(0)
+# circuit diagram
+qcz.draw('mpl')
+```
+```{python, results = 'hide', message = FALSE, fig.show = 'hide',echo=FALSE}
+visualize_transition(qcz,trace = True, saveas = "z1gate.gif", fpg = 100, spg = 2)
+```
+<center> 
+<img src="E:\my data science journey\qiskit_for_AMC\QC_for_AMC\z1gate.gif" width=360 height=360 />
+</center>
+
+## Hadamard Gate
+
+- The Hadamard gate is a true quantum gate and is one of the most important in quantum computing. It is as similar to $\sqrt{NOT}$-gate. 
+- It is a **self inverse gate**. It is used to create the superpositions of $\ket{0}$ and $\ket{1}$ states.
+- The matrix representation of Hadamard gate is as follows,
+$$
+H = \frac{1}{\sqrt{2}}\begin{bmatrix}
+1 & 1 \\ 1 & -1
+\end{bmatrix}
+$$
+- The Hadamard gate and the output states for the $\ket{0}$ and $\ket{1}$ input states are represented as follows. The Hadamard gate satisfies Unitary condition, $H^{\dagger}H = HH^{\dagger} = I$.
+
+```{python H0}
+qch = QuantumCircuit(1) 
+qch.h(0)
+qch.draw('mpl')
+```
+```{python, results = 'hide', message = FALSE, fig.show = 'hide',echo=FALSE}
+visualize_transition(qch,trace = True, saveas = "h0gate.gif", fpg = 100, spg = 2)
+```
+<center> 
+<img src="E:\my data science journey\qiskit_for_AMC\QC_for_AMC\h0gate.gif" width=360 height=360 />
+</center>
+
+
+Do try the same for H-gate acting on $\ket{1}$.
+
+The code for this gate as follows,
+```{python H1}
+qch = QuantumCircuit(1) 
+qch.x(0)
+qch.h(0)
+qch.draw('mpl')
+```
+```{python, results = 'hide', message = FALSE, fig.show = 'hide',echo=FALSE}
+visualize_transition(qch,trace = True, saveas = "h1gate.gif", fpg = 100, spg = 2)
+```
+<center> 
+<img src="E:\my data science journey\qiskit_for_AMC\QC_for_AMC\h1gate.gif" width=360 height=360 />
+</center>
+
+### Working of H-gate.
+- $H\ket{0} =\frac{1}{\sqrt{2}}\begin{bmatrix}1 & 1 \\ 1 & -1 \end{bmatrix} \begin{bmatrix}1 \\0\end{bmatrix} = \frac{1}{\sqrt{2}}\begin{bmatrix}1 \\1\end{bmatrix}=\frac{\ket{0}+\ket{1}}{\sqrt{2}} = \ket{+}$|
+- $H\ket{1} = \frac{1}{\sqrt{2}}\begin{bmatrix}1 & 1 \\ 1 & -1 \end{bmatrix} \begin{bmatrix}0 \\1\end{bmatrix} = \frac{1}{\sqrt{2}}\begin{bmatrix}1 \\-1\end{bmatrix} = \frac{\ket{0}-\ket{1}}{\sqrt{2}}=\ket{-}$|
+
+Just as part of the academic curiosity, let use observe how H-gate acts on $\ket{+}$ and $\ket{-}$ respectively.
+```{python Hp}
+# creating |0>
+qchp = QuantumCircuit(1) 
+# Action of H-gate to get |+>
+qchp.h(0)
+# Action of H-gate on |+>
+qchp.h(0)
+# circuit diagram
+qchp.draw('mpl')
+```
+```{python, results = 'hide', message = FALSE, fig.show = 'hide',echo=FALSE}
+visualize_transition(qchp,trace = True, saveas = "hpgate.gif", fpg = 100, spg = 2)
+```
+<center> 
+<img src="E:\my data science journey\qiskit_for_AMC\QC_for_AMC\hpgate.gif" width=360 height=360 />
+</center>
+
+```{python Hm}
+# creating |0>
+qchm = QuantumCircuit(1) 
+# Action of X-gate to get |1>
+qchm.x(0)
+# Action of H-gate to get |->
+qchm.h(0)
+# Action of H-gate on |->
+qchm.h(0)
+qchm.draw('mpl')
+```
+```{python, results = 'hide', message = FALSE, fig.show = 'hide',echo=FALSE}
+visualize_transition(qchm,trace = True, saveas = "hmgate.gif", fpg = 100, spg = 2)
+```
+<center> 
+<img src="E:\my data science journey\qiskit_for_AMC\QC_for_AMC\hmgate.gif" width=360 height=360 />
+</center>
+
+## S-gate
+- The S-gate  turns $\ket{0}$ into $\ket{0}$ and $\ket{1}$ into $i\ket{1}$.
+- Based on the quantum gates try this for yourself. 
+
+```{python S0}
+# creating |0>
+qcs = QuantumCircuit(1) 
+# action of S-gate on |0>
+qcs.s(0)
+# circuit diagram
+qcs.draw('mpl')
+```
+```{python, results = 'hide', message = FALSE, fig.show = 'hide',echo=FALSE}
+visualize_transition(qcs,trace = True, saveas = "s0gate.gif", fpg = 100, spg = 2)
+```
+<center> 
+<img src="E:\my data science journey\qiskit_for_AMC\QC_for_AMC\s0gate.gif" width=360 height=360 />
+</center>
+
+The action of S-gate on $\ket{1}$.
+```{python S1}
+# creating |0>
+qcs = QuantumCircuit(1)
+# action of X-gate on |0> to get |1>
+qcs.x(0)
+# action of S-gate on |1>
+qcs.s(0)
+# circuit diagram
+qcs.draw('mpl')
+```
+```{python, results = 'hide', message = FALSE, fig.show = 'hide',echo=FALSE}
+visualize_transition(qcs,trace = True, saveas = "s1gate.gif", fpg = 100, spg = 2)
+```
+<center> 
+<img src="E:\my data science journey\qiskit_for_AMC\QC_for_AMC\s1gate.gif" width=360 height=360 />
+</center>
+
+## T-gate 
+
+- The T-gate is represented by the following matrix,
+$$T = \begin{bmatrix}
+1 & 0 \\ 0 & e^{i\frac{\pi}{8}}
+\end{bmatrix} = \begin{bmatrix}
+1 & 0 \\ 0 & \frac{1+i}{\sqrt{2}}
+\end{bmatrix}
+$$
+- It is also called $\frac{\pi}{8}$-gate as it can be represented by the following matrix,
+$$T = \begin{bmatrix}
+e^{-i\frac{\pi}{8}} & 0 \\ 0 & e^{i\frac{\pi}{8}}
+\end{bmatrix} 
+$$
+As part of exercise do the math of T-gate acting on $\ket{0}$ and $\ket{1}$. 
+This really gives out an interesting result.
+
+```{python T0}
+# creating |0>
+qct = QuantumCircuit(1)
+# Action of T-gate on |0> 
+qct.t(0)
+# circuit diagram
+qct.draw('mpl')
+```
+```{python, results = 'hide', message = FALSE, fig.show = 'hide',echo=FALSE}
+visualize_transition(qct,trace = True, saveas = "t0gate.gif", fpg = 100, spg = 2)
+```
+The expected result is,
+<center> 
+<img src="E:\my data science journey\qiskit_for_AMC\QC_for_AMC\t0gate.gif" width=360 height=360 />
+</center>
+
+
+```{python T1}
+# creating |0>
+qct = QuantumCircuit(1)
+# Action of X-gate on |0> to get |1>
+qct.x(0)
+# Action of T-gate on |1>
+qct.t(0)
+# circuit
+qct.draw('mpl')
+```
+```{python, results = 'hide', message = FALSE, fig.show = 'hide',echo=FALSE}
+visualize_transition(qct,trace = True, saveas = "t1gate.gif", fpg = 100, spg = 2)
+```
+<center> 
+<img src="E:\my data science journey\qiskit_for_AMC\QC_for_AMC\t1gate.gif" width=360 height=360 />
+</center>

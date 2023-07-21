@@ -1,0 +1,120 @@
+---
+title: "Basic Introduction to Quantum Computing"
+subtitle: "AMCEC, Department Of Physics"
+author: "Suhas P K"
+date: "2023-07-18"
+output:
+  rmdformats::downcute:
+    self_contained: true
+    default_style: "dark"
+    downcute_theme: "chaos"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Quantum Computing
+
+## INTRODUCTION
+
+Quantum Computing is the area of study focused on
+developing computing methods based on the principle of quantum theory. Quantum computing is based on the principle of quantum superposition. In Quantum computing,
+the information is encoded in quantum system such as atoms, ions or quantum dots. One quantum rule in particular creates an enormous incentives to apply quantum mechanics to computing.
+
+The algorithms are also written based on quantum principles in which, Shor’s algorithm for factorization and Grover’s search algorithm are basic. (Grover is an Indian
+born Physicist working in Bell Labs). The process of computation is incredibly fast but it has to be done by the help of quantum computers which are yet to be realized in practice. It is expected that 140 digit log number could be factored a billion (109) times faster that is possible with classical computation.
+
+## Moore's Law and It's end.
+
+In the year 1965, Gordon Moore observed increasing performance in the first few generations of the integratedcircuit (IC) technology. Moore predicted that it would
+continue to improve at an exponential rate with the performance per unit cost increasing by a factor or two every
+18 months are so. The computer industry has followed this
+prediction since then. But actually the doubling was occurring im every 24 months or 2 years. The following plot shows the 50 years of Moore’s law.
+
+<center> 
+<img src="E:\my data science journey\qiskit_for_AMC\Moore's_Law_Transistor_Count_1970-2020.png" width=720 height=400 />
+</center>
+
+The question that arises is how long can Moore’s law continues to hold and what are the ultimate limitations?.
+According to the semiconductor size data the size has reached 5 nano-meter in 2021. The Demise of the Transistor in the quantum scale could be expected as the dimensions decrease further.\
+Quantum effects can cascade into the micro scale realm causing problems for current micro electronics. The most typical effects are electron tunneling among the circuit lines. Thus Quantum Computation is the option for the further generation.
+
+## Classical and Quantum computing.
+
+### Classical Computing
+
+- Used by large scale, multipurpose and devices.
+- The information is stored in **bits**.
+- There is discrete number of possible states. Either 0 **or** 1.
+- Calculations are **deterministic** in nature. This means repeating the same inputs results in the same output every time.
+- Data processing is carried out by logic and in **sequential order**.
+- Operations are governed by **Boolean algebra**.
+- Circuit behavior is defined by **Classical physics**.
+
+### Quantum Computing
+
+- Used by high speed, computers obeying the laws of **quantum mechanics**.
+- The information is based on **Quantum bits** or **Qubits**.
+- There is an infinite, continuous number of possible states. They are the results of **quantum superposition**.
+- The calculations are **probabilistic** in nature. It means that there are multiple possible outputs to the same inputs.
+- Data processing is carried out by quantum logic at parallel instance.
+- Operations are defined by **linear algebra** in Hilbert space.
+- Circuit behavior is defined by **Quantum mechanics**.
+
+## Qubits, Its properties and Bloch sphere
+
+The counter part of classical bit in quantum computing is **Qubit**. It's the basic unit in which the quantum information is stored in a quantum computer. Superposition, entanglement and tunneling are all special properties that defines as qubit.
+
+### Properties of Qubits
+
+1. A qubit can be in a superposed state of the two states 0 **and** 1.
+2. If measurements are carried out with a qubit  in superposed state then the results that we get will be **probabilistic** unlike how it is **deterministic** in classical computer.
+3. Owing to the quantum nature, the qubit changes its state at once when subjected to measurement. This means, one cannot copy information from qubits the way we do in the present computers, as there will be no similarity between the copy and the original. This is known as **"no cloning principle"**.
+
+A Qubit can be physically implemented by the two states of an electron or horizontal and vertical polarizations of photons as |↓⟩ and |↑.
+
+$$\newcommand{\ket}[1]{\left|{#1}\right\rangle}$$$$\newcommand{\bra}[1]{\left\langle{#1}\right|}$$$$\newcommand{\braket}[2]{\left\langle{#1}\middle|{#2}\right\rangle}$$
+
+### Representation of Qubits
+
+The **pure state space qubits** (Two level quantum mechanical systems) can be visualised using an imaginary sphere called **BLOCH SPHERE**. It has a unit radius.
+
+<center> 
+<img src="E:\my data science journey\qiskit_for_AMC\bloch_sphere.png" width=640 height=400 />
+</center>
+
+
+The arrow on the sphere represents the state of the Qubit. The north and south spoles are used to represent the basis states $\ket{0}$ and $\ket{1}$ respectively. The other locations are the superpositions of $\ket{0}$ and $\ket{1}$ represented by $\ket{\psi} = a\ket{0} +b\ket{1}$ where $a$ and $b$ are complex numbers and satisfy the condition $a^{*}a + b^{*}b = |a|^2 + |b|^2 = 1$ signifies the probability. Thus, a qubit can be any point on the bloch sphere.
+
+The Bloch sphere allows the state of the qubit to be represented by spherical coordinates. They are polar angle $\theta$ and the azimuthal angle $\phi $ The bloch sphere is represented by the equation
+$$\ket{\phi} = \cos(\frac{\theta}{2})\ket{0} + e^{i\theta} \sin(\frac{\theta}{2})\ket{1}$$
+here $0\leqslant\theta\leqslant\pi$ and $0\leqslant\phi\leqslant 2\pi$. The normalization constrain is given by,
+$$ \left| \cos\left[ \frac{\theta}{2} \right] \right|^2 + \left| \sin\left[ \frac{\theta}{2}\right] \right|^2 = 1$$
+### Single qubits and its extension to n-qubits
+
+A single qubit has two computational basis states
+$\ket{0}$ and $\ket{1}$. For two-qubit system has four computational basis states, denoted as $\ket{00}$, $\ket{10}$, $\ket{10}$ and $\ket{11}$.
+Mathematically, it can be show as below,
+$$\ket{\psi} = a\ket{00} + b\ket{01} + c\ket{10} +d\ket{11}$$, where a,b,c, and d are complex numbers.
+
+<center> 
+<img src="E:\my data science journey\qiskit_for_AMC\qubit_rep.png" width=500 height=350 />
+</center>
+
+A multi qubit system of n-qubits has $2^{n}$ computation basis states. For example a state with 3 qubits has $2^3$ computational basis states. Thus, for n-qubits the computational basis states are denoted as $\ket{00\cdots 00}$, $\ket{00\cdots 01}$, $\ket{00\cdots 10}$, $\ket{00\cdots 11}\cdots$, $\ket{11\cdots11}$. The representation of n-qubits is as follows,
+
+<center> 
+<img src="E:\my data science journey\qiskit_for_AMC\multi_qubit_rep.png" width=500 height=350 />
+</center>
+
+## [ Quantum Computing and qiskit simulations](https://rpubs.com/suhasPK/QuantumComputingQiskit)
+
+
+
+
+
+
+
+
+

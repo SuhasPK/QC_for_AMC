@@ -1,0 +1,151 @@
+---
+title: "Quantum Gates and Qiskit"
+date: "`r Sys.Date()`"
+output:
+  rmdformats::downcute:
+    self_contained: true
+    default_style: "dark"
+    downcute_theme: "chaos"
+---
+
+
+```{r setup, include=FALSE}
+## Global options
+knitr::opts_chunk$set(cache = TRUE)
+```
+
+# Introduction to Quantum Gates
+
+In quantum computing a quantum logic gate is a basic quantum circuit operating on a small number of qubits.
+A qubit is useless unless it is used to carry out a quantum calculation. The quantum calculations are achieved by performing a series of fundamental operations, known as quantum logic gates. They are the building blocks of quantum circuits similar to the classical logic gates in conventional digital circuits.
+
+$$\newcommand{\ket}[1]{\left|{#1}\right\rangle}$$$$\newcommand{\bra}[1]{\left\langle{#1}\right|}$$$$\newcommand{\braket}[2]{\left\langle{#1}\middle|{#2}\right\rangle}$$
+The whole purpose of this site is to not only understand the theoretical aspect of quantum computing but also to understand the concepts quantum gates by programming it. 
+The best program that comes to my mind is python's **qiskit**. 
+Unfortunately, this is a Rmarkdown file commonly used in R environment. But on the brighter side R has a library called __reticulate__, which helps me to write python code in Rmarkdown file.
+
+## Installation of required libraries.
+This code chunk is exclusive for R. The __reticulate__ library helps to code python in R environment.
+I have also set the path of the virtual environment __r-reticulate__having all my python libraries.
+```{r R libraries}
+library(reticulate)
+
+use_python("C:\\Users\\user\\AppData\\Local\\R-MINI~1\\envs\\r-reticulate", required = TRUE)
+```
+
+To install __qiskit__ library, 
+```{python, include = FALSE, echo =FALSE, eval = F}
+pip install qiskit
+```
+I am also using the library __qiskit_textbook__ so the output of the matrices renders in $LaTeX$ format.
+```{python python libraries}
+from qiskit import *
+from qiskit.visualization import plot_bloch_multivector, visualize_transition
+from qiskit_textbook.tools import array_to_latex
+```
+
+# Single Qubit Gates
+
+There are some important $2\times2$ matrices, which important to understand the basics of quantum gates. Just to work with them, lets start with the most simplest of all,
+
+### Indentity matrix or I-gate
+
+The matrix is $I = \begin{bmatrix} 1 & 0 \\ 0 & 1 \end{bmatrix}$.
+
+Just as a revision, $\ket{0} = \begin{bmatrix} 1 \\ 0 \end{bmatrix}$ and $\ket{1} = \begin{bmatrix} 0 \\ 1 \end{bmatrix}$. Note that these are called **computational bases** and they obey **Orthonormality**. 
+
+Now, lets give $\ket{0}$ through I-gate,
+
+$I\ket{0} = \begin{bmatrix} 1 & 0 \\ 0 & 1 \end{bmatrix} \begin{bmatrix} 1 \\ 0 \end{bmatrix}= \begin{bmatrix} 1 \\ 0 \end{bmatrix} = \ket{0}$
+
+Do try the same for $\ket{1}$.
+
+### X-gate (Quantum Not)
+Now lets simulate using qiskit.
+
+```{python, echo = FALSE}
+# Allowing to create a 1 qubit. By default |0> is used. 
+q = QuanutmRegis
+qc = QuantumCircuit(1) 
+# Putting |0> through X-gate
+qc.x(0)
+# Circuit diagram
+qc.draw('mpl')
+```
+```{python, results = 'hide', message = FALSE, fig.show = 'hide'}
+# To 
+visualize_transition(qc,trace = True, saveas = "xgate.gif", fpg = 100, spg = 2)
+```
+
+<center> 
+<img src="E:\my data science journey\qiskit_for_AMC\xgate.gif" width=480 ght=360 />
+</center>
+
+
+
+```{python, echo = FALSE}
+
+qc = QuantumCircuit(1)
+qc.x(0)
+qc.draw('mpl')
+```
+```{python, results = 'hide', message = FALSE, fig.show = 'hide'}
+visualize_transition(qc,trace = True, saveas = "xgate.gif", fpg = 100, spg = 2)
+```
+
+<center> 
+<img src="E:\my data science journey\qiskit_for_AMC\xgate.gif" width=480 ght=360 />
+</center>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
